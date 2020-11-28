@@ -1,25 +1,83 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../views/Home.vue';
-import Contact from '../components/ContactUs.vue';
+import HomePage from '../views/Home.vue';
+import LoginPage from '../views/Login.vue';
+import DashboardPage from '../views/Dashboard.vue';
+import TabelsPage from '../views/Tabels.vue';
+import LabTabelView from '../views/LabTabelGroup.vue';
+import LectTabelView from '../views/LectTabelGroup.vue';
+import LabPage from '../views/Labs.vue';
+import LecturesPage from '../views/Lectures.vue';
+import NotificationsPage from '../views/Notifications.vue';
+import StudentsPage from '../views/Students.vue';
+import TeachersPage from '../views/Teachers.vue';
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'home',
+    component: HomePage,
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    path: '/login',
+    name: 'login',
+    component: LoginPage,
   },
   {
-    path: '/contact-us',
-    name: 'Contact Us',
-    component: Contact,
+    path: '/dashboard',
+    name: 'dashboard',
+    components: {
+      default: DashboardPage,
+    },
+    children: [
+      {
+        path: 'tabels',
+        name: 'tabels',
+        components: {
+          default: TabelsPage,
+        },
+        children: [
+          {
+            path: 'labs',
+            name: 'labs',
+            component: LabPage,
+            children: [
+              {
+                path: ':labID',
+                component: LabTabelView,
+              },
+            ],
+          },
+          {
+            path: 'lectures',
+            name: 'lectures',
+            component: LecturesPage,
+            children: [
+              {
+                path: ':lectID',
+                component: LectTabelView,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: 'notifications',
+        name: 'notifications',
+        components: {
+          default: NotificationsPage,
+        },
+      },
+      {
+        path: 'students',
+        name: 'students',
+        component: StudentsPage,
+      },
+      {
+        path: 'teachers',
+        name: 'teachers',
+        component: TeachersPage,
+      },
+    ],
   },
 ];
 
