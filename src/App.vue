@@ -1,5 +1,5 @@
 <template>
-  <div class="application">
+  <div class="mainContainer application">
     <app-header></app-header>
     <router-view />
     <!-- <router-view name="tabel" /> -->
@@ -22,5 +22,9 @@ export default {
 </script>
 
 <style>
-
+  .mainContainer{
+    background: #fcfcfc;
+    height: 100%;
+    position: absolute;
+  }
 </style>

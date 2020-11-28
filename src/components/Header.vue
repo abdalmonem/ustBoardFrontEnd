@@ -13,6 +13,7 @@ a {
   text-decoration: none;
 }
 .nav {
+  background: #fff;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
