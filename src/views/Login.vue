@@ -6,13 +6,15 @@
       <du-input label="كلمة المرور"/>
       <div style="width: 20px; height: 30px;"></div>
       <div class="controllArea">
-        <du-button text="كلمة المرور"/>
+        <du-button text="كلمة المرور" @click="login()"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Axios from 'axios';
+import AjaxWorker from '../jsHelpers/AjaxWorker';
 import DuInput from '../components/DuInput.vue';
 import DuButton from '../components/DuButton.vue';
 
@@ -20,6 +22,20 @@ export default {
   components: {
     duInput: DuInput,
     duButton: DuButton,
+  },
+  methods: {
+    makeAlert() {
+      alert('hello');
+    },
+    login() {
+      const x = new AjaxWorker();
+      x.request('api/example').then((res) => {
+        alert(res);
+      });
+      // Axios.get('https://google.com').then((res) => {
+      //   alert('dsd');
+      // });
+    },
   },
 };
 /*

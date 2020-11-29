@@ -1,6 +1,7 @@
 <template>
   <button
-    class="mainButton" :style="{background:background,color:textColor,fontSize:fontSize+'px'}">
+    class="mainButton" :style="{background:background,color:textColor,fontSize:fontSize+'px'}"
+  >
     {{text}}
   </button>
 </template>
@@ -9,6 +10,11 @@
 
 export default {
   name: 'DuButton',
+  methods: {
+    showAlert() {
+      alert('fd');
+    },
+  },
   props: {
     text: {
       type: String,
