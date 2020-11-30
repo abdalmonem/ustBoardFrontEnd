@@ -5,15 +5,15 @@
         :label="usernameLabel"
         :labelColor="labelColor"
         :inputBorder="inputBorder"
-        :value="user.username"
-        @input="user.username = $event.target.value"/>
+        :value="username"
+        @input="username = $event.target.value"/>
       <div style="width: 20px; height: 30px;"></div>
       <du-input
         :label="passowrdLabel"
         :inputBorder="inputBorder"
         :labelColor="labelColor"
-        :value="user.password"
-        @input="user.password = $event.target.value"/>
+        :value="password"
+        @input="password = $event.target.value"/>
       <div style="width: 20px; height: 30px;"></div>
       <div class="controllArea">
         <du-button @click.prevent="login" text="دخول"/>
@@ -32,10 +32,8 @@ export default {
   data() {
     return {
       show: false,
-      user: {
-        username: '',
-        password: '',
-      },
+      username: '',
+      password: '',
       labelColor: '#555',
       inputBorder: {
         border: {},
@@ -55,7 +53,7 @@ export default {
     login() {
       const x = new AjaxWorker();
       x.request('api/example').then((res) => {
-        alert(res);
+        alert(this.username + ' ' + this.password);
       });
       // Axios.get('https://google.com').then((res) => {
       //   alert('dsd');
