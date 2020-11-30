@@ -18,13 +18,19 @@
         @input="user.password = $event.target.value"/>
       <div style="width: 20px; height: 30px;"></div>
       <div class="controllArea">
+<<<<<<< HEAD
         <du-button @click.prevent="handleInput" text="دخول"/>
+=======
+        <du-button text="كلمة المرور" @click="login()"/>
+>>>>>>> 2cf29382412e2da9522beee37927f698d8759c2c
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Axios from 'axios';
+import AjaxWorker from '../jsHelpers/AjaxWorker';
 import DuInput from '../components/DuInput.vue';
 import DuButton from '../components/DuButton.vue';
 
@@ -49,8 +55,22 @@ export default {
     duButton: DuButton,
   },
   methods: {
+<<<<<<< HEAD
     handleInput() {
       // 
+=======
+    makeAlert() {
+      alert('hello');
+    },
+    login() {
+      const x = new AjaxWorker();
+      x.request('api/example').then((res) => {
+        alert(res);
+      });
+      // Axios.get('https://google.com').then((res) => {
+      //   alert('dsd');
+      // });
+>>>>>>> 2cf29382412e2da9522beee37927f698d8759c2c
     },
   },
 };
