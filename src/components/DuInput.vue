@@ -7,7 +7,7 @@
     </div>
     <input
       :style="{
-        border: inputBorder.border.size + 'px ' + inputBorder.border.style + inputBorder.border.color
+      border: inputBorder.border.size + 'px ' + inputBorder.border.style + inputBorder.border.color
       }"
     />
   </div>
@@ -24,7 +24,7 @@ export default {
     },
     labelColor: {
       type: String,
-      default: '#555'
+      default: '#555',
     },
     inputBorder: {
       border: {
