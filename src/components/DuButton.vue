@@ -1,7 +1,8 @@
 <template>
   <button
-    class="mainButton" :style="{background:background,color:textColor,fontSize:fontSize+'px'}">
-    {{text}}
+    class="mainButton"
+    :style="{ background: background, color: textColor, fontSize: fontSize + 'px' }">
+    {{ text }}
   </button>
 </template>
 

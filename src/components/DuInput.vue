@@ -1,7 +1,15 @@
 <template>
   <div class="DuInputMainContainer">
-    <div class="label">{{label}}</div>
-    <input />
+    <div
+      class="label"
+      :style="{ color: labelColor }">
+      {{ label }}
+    </div>
+    <input
+      :style="{
+        border: inputBorder.border.size + 'px ' + inputBorder.border.style + inputBorder.border.color
+      }"
+    />
   </div>
 </template>
 
@@ -13,6 +21,23 @@ export default {
     label: {
       type: String,
       default: '',
+    },
+    labelColor: {
+      type: String,
+      default: '#555'
+    },
+    inputBorder: {
+      border: {
+        size: {
+          type: Number,
+        },
+        style: {
+          type: String,
+        },
+        color: {
+          type: String,
+        },
+      },
     },
   },
 };
@@ -27,7 +52,7 @@ export default {
   }
   .DuInputMainContainer .label{
     font-size: 17px;
-    color: #555;
+    /* color: #555; */
     margin-bottom: 10px;
   }
   .DuInputMainContainer input{

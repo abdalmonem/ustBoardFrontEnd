@@ -1,12 +1,24 @@
 <template>
   <div class="mainContainer">
     <div class="loginBox">
-      <du-input label="اسم المستخدم"/>
+      <du-input
+        :label="usernameLabel"
+        :username="usernameLabel"
+        :labelColor="labelColor"
+        :inputBorder="inputBorder"
+        :value="user.username"
+        @input="user.username = $event.target.value"/>
       <div style="width: 20px; height: 30px;"></div>
-      <du-input label="كلمة المرور"/>
+      <du-input
+        :label="passowrdLabel"
+        :passowrd="passowrdLabel"
+        :inputBorder="inputBorder"
+        :labelColor="labelColor"
+        :value="user.password"
+        @input="user.password = $event.target.value"/>
       <div style="width: 20px; height: 30px;"></div>
       <div class="controllArea">
-        <du-button text="كلمة المرور"/>
+        <du-button @click.prevent="handleInput" text="دخول"/>
       </div>
     </div>
   </div>
@@ -17,19 +29,32 @@ import DuInput from '../components/DuInput.vue';
 import DuButton from '../components/DuButton.vue';
 
 export default {
+  data() {
+    return {
+      show: false,
+      user: {
+        username: '',
+        password: '',
+      },
+      labelColor: '#555',
+      inputBorder: {
+        border: {},
+      },
+      usernameLabel: 'إسم المستخدم',
+      passowrdLabel: 'كلمة المرور',
+    };
+  },
   components: {
     duInput: DuInput,
     duButton: DuButton,
   },
-};
-/*
-import Login from '../components/auth/LoginForm.vue';
-
-export default {
-  components: {
-    appLoginForm: Login,
+  methods: {
+    handleInput() {
+      // 
+    },
   },
-}; */
+};
+
 </script>
 
 <style scoped>
@@ -55,6 +80,6 @@ export default {
     display: flex;
     flex-direction: row;
     align-content: space-between;
-    justify-content: end;
+    justify-content: flex-start;
   }
 </style>
