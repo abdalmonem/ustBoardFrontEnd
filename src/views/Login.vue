@@ -3,7 +3,6 @@
     <div class="loginBox">
       <du-input
         :label="usernameLabel"
-        :username="usernameLabel"
         :labelColor="labelColor"
         :inputBorder="inputBorder"
         :value="user.username"
@@ -11,15 +10,13 @@
       <div style="width: 20px; height: 30px;"></div>
       <du-input
         :label="passowrdLabel"
-        :passowrd="passowrdLabel"
         :inputBorder="inputBorder"
         :labelColor="labelColor"
         :value="user.password"
         @input="user.password = $event.target.value"/>
       <div style="width: 20px; height: 30px;"></div>
       <div class="controllArea">
-        <du-button @click.prevent="handleInput" text="دخول"/>
-        <du-button text="كلمة المرور" @click="login()"/>
+        <du-button @click.prevent="login" text="دخول"/>
       </div>
     </div>
   </div>
