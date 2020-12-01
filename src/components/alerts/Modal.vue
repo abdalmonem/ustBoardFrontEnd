@@ -7,11 +7,10 @@
       </div>
       <slot class="buttons">
         <du-button
-          @click.prevent="showModal = false"
+          @click="showModal=false"
           text="إلغاء"
           style="background: #eee; color: rgba(0, 0, 0, .6);"
-          >
-        </du-button>
+          />
         <du-button
           :text="btnPlus.text"
           :style="{
@@ -64,7 +63,7 @@ export default {
         },
         marginRight: {
           type: Number,
-        }
+        },
       },
       show: {
         type: Boolean,
