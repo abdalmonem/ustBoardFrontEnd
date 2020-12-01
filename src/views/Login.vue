@@ -23,8 +23,6 @@
 </template>
 
 <script>
-import Axios from 'axios';
-import AjaxWorker from '../jsHelpers/AjaxWorker';
 import DuInput from '../components/DuInput.vue';
 import DuButton from '../components/DuButton.vue';
 
@@ -47,14 +45,7 @@ export default {
     duButton: DuButton,
   },
   methods: {
-    makeAlert() {
-      alert('hello');
-    },
     login() {
-      const x = new AjaxWorker();
-      x.request('api/example').then((res) => {
-        alert(this.username + ' ' + this.password);
-      });
       // Axios.get('https://google.com').then((res) => {
       //   alert('dsd');
       // });

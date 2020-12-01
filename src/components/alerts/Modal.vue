@@ -7,7 +7,7 @@
       </div>
       <slot class="buttons">
         <du-button
-          @click="showModal=false"
+          @click="this.$emit('onClose')"
           text="إلغاء"
           style="background: #eee; color: rgba(0, 0, 0, .6);"
           />

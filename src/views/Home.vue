@@ -46,7 +46,11 @@ export default {
   methods: {
     redirectToLoginPage() {
       // this.$router.push('/login');
-      this.showModal == false ? this.showModal = true : this.showModal = false;
+      if (this.showModal === false) {
+        this.showModal = true;
+      } else {
+        this.showModal = false;
+      }
     },
   },
   components: {
