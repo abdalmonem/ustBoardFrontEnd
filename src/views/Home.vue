@@ -1,34 +1,19 @@
 <template>
-  <div class="entery">
-    <div class="img-holder">
-      <img src="../assets/logo.jpg" alt="USR Logo">
-    </div>
-    <div class="entery-info">
-      <h2>جامعة العلوم والتقانة</h2>
-      <h3>المركز الإعلامي</h3>
-    </div>
-    <div class="entery-link">
-      <!-- <a @click.prevent="redirectToLoginPage">الدخول</a> -->
-      <du-button text="الدخول" @click="redirectToLoginPage"></du-button>
-    </div>
-    <du-modal
-      title="حذف مستخدم"
-      content="هل تريد الحذف؟؟ بلا بلا بلا بلا..."
-      :showModal="showModal"
-      :btnPlus="btnPlus">
-    </du-modal>
-    <!-- <du-check-box text="إحتيار من قائمة"></du-check-box> -->
-  </div>
+  ewew
 </template>
 
 <script>
 
-import DuButton from '../components/DuButton.vue';
-import DuModal from '../components/alerts/Modal.vue';
 // import DuCheckBox from '../components/DuCheckBox.vue';
+import mainStore from '../stores/mainStore';
 
 export default {
   name: 'Entery',
+  created() {
+    if (!mainStore.getters.isLogin) {
+      this.$router.replace({ path: '/login' });
+    }
+  },
   data() {
     return {
       showModal: false,
@@ -45,17 +30,9 @@ export default {
   },
   methods: {
     redirectToLoginPage() {
-      // this.$router.push('/login');
-      if (this.showModal === false) {
-        this.showModal = true;
-      } else {
-        this.showModal = false;
-      }
     },
   },
   components: {
-    duButton: DuButton,
-    duModal: DuModal,
     // duCheckBox: DuCheckBox,
   },
 };

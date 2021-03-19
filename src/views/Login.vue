@@ -6,16 +6,17 @@
         :labelColor="labelColor"
         :inputBorder="inputBorder"
         :value="username"
-        @input="username = $event.target.value"/>
+        @input="handleUsername"/>
       <div style="width: 20px; height: 30px;"></div>
       <du-input
         :label="passowrdLabel"
         :inputBorder="inputBorder"
         :labelColor="labelColor"
         :value="password"
-        @input="password = $event.target.value"/>
+        @input="handlePassword"/>
       <div style="width: 20px; height: 30px;"></div>
       <div class="controllArea">
+        <a href="#" class="resetPasswordLink">استعادة كلمة المرور</a>
         <du-button @click.prevent="login" text="دخول"/>
       </div>
     </div>
@@ -23,6 +24,8 @@
 </template>
 
 <script>
+import mainStore from '../stores/mainStore';
+import AjaxWorker from '../jsHelpers/AjaxWorker';
 import DuInput from '../components/DuInput.vue';
 import DuButton from '../components/DuButton.vue';
 
@@ -45,11 +48,56 @@ export default {
     duButton: DuButton,
   },
   methods: {
-    login() {
-      // Axios.get('https://google.com').then((res) => {
-      //   alert('dsd');
-      // });
+    handleUsername(event) {
+      this.username = event.target.value;
     },
+    handlePassword(event) {
+      this.password = event.target.value;
+    },
+    login() {
+      new AjaxWorker().request('/api/login', {
+        username: this.username, password: this.password,
+      }).then((res) => {
+        if (res === 'NOINTERNETCONNECTION') {
+          this.$createFixedNotification(
+            'خطأ في الإتصال',
+            'تأكد من إتصالك بالإنترنت',
+            // eslint-disable-next-line global-require
+            require('../assets/icons/w/exclamationF.png'),
+            null,
+            '#FF065A',
+            3,
+          );
+        } else if (res.state) {
+          mainStore.dispatch('saveLogin', {
+            id: res.data.id,
+            authKey: res.data.auth_key,
+          });
+          this.$router.replace({ path: '/Home' });
+        } else if (!res.state) {
+          let desc = 'اسم المستخدم أو كلمة المرور خاطئة';
+          if (res.reason === 'incorrect_password') {
+            desc = 'كلمة المرور خاطئة';
+          } else if (res.reason === 'account_not_found') {
+            desc = 'لم يتم إيجاد هذا الحساب';
+          }
+          this.$createFixedNotification(
+            '',
+            desc,
+            // eslint-disable-next-line global-require
+            require('../assets/icons/w/exclamationF.png'),
+            null,
+            '#FF065A',
+            3,
+          );
+        }
+      });
+    },
+  },
+  created() {
+    if (mainStore.getters.isLogin) {
+      this.$router.replace({ path: '/Home' });
+    }
   },
 };
 
@@ -78,6 +126,12 @@ export default {
     display: flex;
     flex-direction: row;
     align-content: space-between;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .resetPasswordLink{
+    color: #8F28F0;
+    font-size: 13px;
   }
 </style>

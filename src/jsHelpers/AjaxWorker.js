@@ -1,12 +1,25 @@
 import Axios from 'axios';
+// eslint-disable-next-line import/no-cycle
+import mainStore from '../stores/mainStore';
 
 export default class AjaxWorker {
-  url = 'https://localhost:5000/'
+  url = 'http://127.0.0.1:5000'
 
-  async request(url) {
+  async request(url, params = {}) {
     let response = 'NOINTERNETCONNECTION';
-    await Axios.get(this.url + url).then((connectionResponse) => {
-      response = connectionResponse;
+    const headers = {};
+    if (mainStore.getters.isLogin) {
+      headers.id = mainStore.getters.id;
+      headers.auth_key = mainStore.getters.authKey;
+    }
+    await Axios.request({
+      url: `${this.url}${url}`,
+      params,
+      headers,
+      method: params.length > 0 ? 'POST' : 'GET',
+    }).then((connectionResponse) => {
+      console.log(connectionResponse);
+      response = connectionResponse.data;
     }).catch((e) => {
       console.log('connection error');
       console.log(e);

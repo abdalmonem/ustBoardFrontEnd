@@ -4,10 +4,24 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />-->
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <style>
+        html,body{
+            background: #fcfcfc;
+        }
+        input:focus {
+          border-color: inherit;
+          -webkit-box-shadow: none;
+          box-shadow: none;
+        }
+        *:focus {
+            outline: none;
+        }
+        a {
+            text-decoration: none;
+        }
+    </style>
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <!--<script src="https://kit.fontawesome.com/a616279fc6.js" crossorigin="anonymous"></script>-->
   </head>
   <body style="direction: rtl !important; margin: 0; padding: 0;">
     <noscript>
