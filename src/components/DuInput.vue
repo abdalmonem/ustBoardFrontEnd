@@ -7,7 +7,7 @@
       {{ label }}
     </div>
     <div class="inputSection" :class="!state.isValid ? 'errorBorder' : '' ">
-      <div v-if="type === 'selectMenu'" class="selectMenu">
+      <div v-if="type === 'selectMenu'" class='selectMenu'>
         <div class="selectMenuPlaceHolder"
              @click="openSelectMenu()">{{ getSelectMenuInterfaceText() }}</div>
         <div class="selectMenuBody"
