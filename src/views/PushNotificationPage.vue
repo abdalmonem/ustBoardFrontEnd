@@ -7,6 +7,23 @@
     @select='(e) => false'/>
     <div class="notes">{{ getBrodcastNote() }}</div>
     <div class="notificationMainSections">
+      <div class="selectionArea">
+        <div class="inputArea">
+          <input placeholder="البحث عن مستخدم"/>
+        </div>
+        <div style="width:20px;height: 20px;"></div>
+        <div class="selectionCell">
+          <div class="checkBox">
+            <div class="checked"></div>
+          </div>
+          <div style="width:10px;height: 10px;"></div>
+          <div class="info">
+            <span class="name">mohammed</span>
+            <span class="type">طالب</span>
+          </div>
+        </div>
+      </div>
+      <div style="width:20px;height: 20px;"></div>
       <textarea class="notificationText"></textarea>
     </div>
   </div>
@@ -18,6 +35,7 @@
 
 <script>
 import { reactive } from 'vue';
+import { useRoute } from 'vue-router';
 import DuHorizontalMenu from '@/components/DuHorizontalMenu.vue';
 import DuButton from '@/components/DuButton.vue';
 import AjaxWorker from '@/jsHelpers/AjaxWorker';
@@ -29,9 +47,19 @@ export default {
     DuHorizontalMenu,
   },
   setup() {
+    const route = useRoute();
     const state = reactive({
       departments: [],
+      selectedUsers: [],
     });
+    const checkUrlParams = () => {
+      setTimeout(() => {
+        if (route.query.users !== undefined) {
+          state.selectedUsers = state.selectedUsers.concat(route.query.users);
+        }
+      }, 100);
+    };
+    checkUrlParams();
     const getDepartments = () => {
       new AjaxWorker().request('/api/getDepartments', {})
         .then((res) => {
@@ -115,6 +143,9 @@ export default {
   margin-top: 50px;
   align-content: start;
 }
+.notificationMainSections textarea{
+  flex: 1;
+}
 .selectionArea{
   display: flex;
   flex-direction: column;
@@ -123,10 +154,30 @@ export default {
   border-radius: 8px;
   box-shadow: 0 0 10px #eee;
 }
+
+.selectionArea .inputArea{
+  width: 100%;
+  box-shadow: 0px 5px 5px #f9f9f9;
+}
+.selectionArea input{
+  width: 80%;
+  margin: 5%;
+  padding: 15px 5%;
+  border-radius: 100px;
+  font-size: 13px;
+  border: 2px solid #ccc;
+}
 .selectionCell{
   display: flex;
   flex-direction: row;
   padding: 10px 5%;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.selectionCell:hover{
+  opacity: 0.5;
 }
 
 .selectionCell .expandIcon{
@@ -154,11 +205,21 @@ export default {
   background: #8F28F0;
   border-radius: 8px;
 }
-.selectionCell .text{
+.selectionCell .info{
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
   flex: 1;
-  margin: 0 10px;
 }
-
+.selectionCell .info .name{
+  font-size: 14px;
+  color: #222;
+}
+.selectionCell .info .type{
+  font-size: 11px;
+  color: #777;
+  margin-top: 5px;
+}
 .notes{
   font-size: 13px;
   margin-top: 20px;

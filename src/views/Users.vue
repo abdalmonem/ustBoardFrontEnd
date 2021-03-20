@@ -3,7 +3,8 @@
     <duButton text="إضافة جديد" style="justify-self: end;align-self: end"
               v-if="allowToAddButtonToShow()" @click="isAddNewUserPopOpShow = true;"/>
     <div class="theBody">
-      <dashboardUserCel v-for="item in items" :key="item.id"  :data="item"/>
+      <dashboardUserCel v-for="item in items" :key="item.id" :data="item"
+                        @on-check="onCheck"/>
     </div>
   </div>
   <GenericPopUp title="إضافة مستخدم" :isShowing="isAddNewUserPopOpShow"
@@ -56,10 +57,15 @@
       </div>
 
   </GenericPopUp>
+  <div class="fixedBanner">
+    <div></div>
+    <duButton text="ارسال إشعار" @click="sendNotification()"/>
+  </div>
 </template>
 
 <script>
-
+import { useRouter } from 'vue-router';
+import { reactive } from 'vue';
 import mainStore from '@/stores/mainStore';
 import AjaxWorker from '@/jsHelpers/AjaxWorker';
 import DuButton from '../components/DuButton.vue';
@@ -78,7 +84,35 @@ export default {
     return {
       isAddNewUserPopOpShow: false,
       items: [],
+      selectedItems: [],
       type: '',
+    };
+  },
+  setup() {
+    const router = useRouter();
+    const state = reactive({
+      selectedItems: [],
+    });
+    const sendNotification = () => {
+      router.push({
+        path: '/pushNotification',
+        query: { users: state.selectedItems },
+      });
+    };
+    const onCheck = (id) => {
+      if (!state.selectedItems.includes(id)) {
+        state.selectedItems.push(id);
+      } else {
+        const index = state.selectedItems.indexOf(id);
+        if (index !== -1) {
+          state.selectedItems.splice(index, 1);
+        }
+      }
+    };
+    return {
+      sendNotification,
+      onCheck,
+      state,
     };
   },
   methods: {
@@ -223,5 +257,17 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+.fixedBanner{
+  background: #fff;
+  padding: 20px 15%;
+  width: 70%;
+  box-shadow: 0 0 10px #ccc;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 </style>

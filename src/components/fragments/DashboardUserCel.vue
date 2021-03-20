@@ -1,10 +1,10 @@
 <template>
   <div class="mainComponent">
-    <div class="thumb">{{ data.username[0].toUpperCase() }}</div>
+    <div class="thumb">{{ state.data.username[0].toUpperCase() }}</div>
     <div style="width: 10px; height: 10px"></div>
     <div class="contentSide">
       <div class="name">
-        {{ data.username }}
+        {{ state.data.username }}
         <span class="userType"> {{ getRank() }} </span>
       </div>
       <div class="subInfo">
@@ -26,14 +26,15 @@
         ]"/>
       </div>
       <div style="width: 10px; height: 10px"></div>
-      <div class="check" @click="isChecked = !isChecked">
-        <img :src="require('../../assets/icons/w/checkF.png')" v-if="isChecked" />
+      <div class="check" @click="onCheck">
+        <img :src="require('../../assets/icons/w/checkF.png')" v-if="state.isChecked" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { reactive } from 'vue';
 import IconsWorker from '../../jsHelpers/IconsWorker';
 import DuContextMenu from '../DuContextMenu.vue';
 
@@ -46,27 +47,41 @@ export default {
       console.log(theKey);
       this.isContextMenuOpen = false;
     },
-    getRank() {
-      let rank = '';
-      if (this.data.rank === 'student') {
-        rank = 'طالب';
-      } else if (this.data.rank === 'teacher') {
-        rank = 'أستاذ';
-      } else if (this.data.rank === 'supervisor') {
-        rank = 'مشرف';
-      } else if (this.data.rank === 'admin') {
-        rank = 'مدير نظام';
-      }
-      return rank;
-    },
+  },
+  data() {
+    return {
+      isContextMenuOpen: false,
+    };
   },
   props: {
     data: {},
   },
-  data() {
-    return {
+  setup(props, { emit }) {
+    const state = reactive({
       isChecked: false,
-      isContextMenuOpen: false,
+      data: props.data,
+    });
+    const getRank = () => {
+      let rank = '';
+      if (state.data.rank === 'student') {
+        rank = 'طالب';
+      } else if (state.data.rank === 'teacher') {
+        rank = 'أستاذ';
+      } else if (state.data.rank === 'supervisor') {
+        rank = 'مشرف';
+      } else if (state.data.rank === 'admin') {
+        rank = 'مدير نظام';
+      }
+      return rank;
+    };
+    const onCheck = () => {
+      state.isChecked = !state.isChecked;
+      emit('on-check', state.data.id.toString());
+    };
+    return {
+      onCheck,
+      state,
+      getRank,
     };
   },
 };
